@@ -26,8 +26,8 @@ export default function Cart() {
         {
           cart.map(product => <ItemCart key={product.id} item={product}/>)
         }
-        <p>
-          total: {totalPrice()}
+        <p className='totalPrice'>
+          Total de su compra: ${totalPrice()}
         </p>
     </div>
   )
