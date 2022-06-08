@@ -8,14 +8,23 @@ import { CartContext } from '../../context/CartContext'
 //Exportacion de mi funcion ItemDetail, que es la encargada de recibir productos y
 // armar una card con sus caracteristicas
 export default function ItemDetail({item}) {
+
+  const [goToCart, setGoToCart] = React.useState(false)
+
+  const { addToCart } = React.useContext(CartContext)
+  
+  const onAdd = (quantity) => {
+    setGoToCart(true)
+    addToCart(item, quantity)
+  }
   
   const [count, setCount] = React.useState(1)
 
-  const { addToCart } = React.useContext(CartContext)
+  
 
   return (
     <div className='item-card'>
-        <Card  className='card' style={{ width: '40rem'}}>
+        <Card  className='card' style={{ width: '30rem'}}>
             <Card.Img variant="top" src={item.img} />
             <Card.Body>
                 <Card.Title>{item.title}</Card.Title>
@@ -24,13 +33,18 @@ export default function ItemDetail({item}) {
                 the card's content.
                 </Card.Text>
                 <Button variant="primary">{item.price}</Button>
+                {
+                  goToCart 
+                  ? <Link to='/cart'>Terminar Compra</Link>
+                  :  <ItemCount 
+                          onAdd={onAdd}
+                          stock={item.stock} 
+                          count={count}
+                          setCount={setCount}
+                    />
+                }
 
-                <ItemCount 
-                stock={item.stock} 
-                onSubmit={() => addToCart(item, count)}
-                count={count}
-                setCount={setCount}
-                />
+               
             </Card.Body>
         </Card>
     </div>
