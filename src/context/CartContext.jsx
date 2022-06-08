@@ -9,6 +9,7 @@ const CartProvider = ({children}) => {
   const [cart, setCart] = React.useState([])
   console.log(cart)
 
+  //agregar al carrito
   const addToCart = (item, count) => {
     if(isInCart(item.id)) {
       const newCart = cart.map(cartItem => {
@@ -24,18 +25,29 @@ const CartProvider = ({children}) => {
     }
   }
 
+  //Eliminar del carrito
   const removeFromCart = (id) => {
     const newCart = cart.filter((carItem) => carItem.id !== id);
     setCart(newCart)
   }
 
+  //Vaciar todo el carrito
   const deleteAll = () => {
     setCart([])
   }
 
+  //Se encuentra en el carrito
   const isInCart = (id) => {
     return cart.find(item => item.id === id)
   }
+
+  //Precio total
+  const totalPrice = () => {
+    return cart.reduce((acumuladorPrice, actualPrice) => acumuladorPrice + actualPrice.quantity * actualPrice.price,0)
+  }
+
+  //Total de productos
+  const totalProducts = () => cart.reduce((acumulador, productActual) => acumulador + productActual.quantity, 0)
 
   return (
     <Provider value={{
@@ -43,7 +55,9 @@ const CartProvider = ({children}) => {
       removeFromCart,
       deleteAll,
       isInCart,
-      cart,
+      totalPrice,
+      totalProducts,
+      cart
     }}>{children}</Provider>
   )
 }

@@ -32,7 +32,7 @@ export default function ItemDetail({item}) {
                 Some quick example text to build on the card title and make up the bulk of
                 the card's content.
                 </Card.Text>
-                <Button variant="primary">{item.price}</Button>
+                <Button variant="primary">${item.price}</Button>
                 {
                   goToCart 
                   ? <Link to='/cart'>Terminar Compra</Link>
